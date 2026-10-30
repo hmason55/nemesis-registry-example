@@ -23,6 +23,7 @@ class PackageTests(unittest.TestCase):
                     self.assertIn('id=nemesis.registry.example\n', manifest)
                     self.assertIn('version=' + version + '\n', manifest)
                     self.assertIsNone(archive.testzip())
+                    self.assertTrue(all(member.create_system == 3 for member in archive.infolist()))
                 self.assertEqual((root/'dist/SHA256SUMS').read_text().split()[0], hashlib.sha256(original).hexdigest())
                 subprocess.run(command, cwd=root, check=True, capture_output=True)
                 self.assertEqual(path.read_bytes(), original)
